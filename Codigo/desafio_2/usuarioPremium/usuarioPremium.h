@@ -1,4 +1,0 @@
-#ifndef USUARIOPREMIUM_H
-#define USUARIOPREMIUM_H
-
-#endif // USUARIOPREMIUM_H
