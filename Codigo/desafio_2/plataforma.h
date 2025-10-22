@@ -51,6 +51,15 @@ public:
     int getCantidadUsuarios() const;
     int getCantidadPublicidades() const;
     int getCantidadArtistas() const;
+
+    void mostrarReproduccion(const char* mensajePublicidad,
+                             char categoriaPublicidad,
+                             const char* cantante,
+                             const char* album,
+                             const char* rutaPortada,
+                             const char* tituloCancion,
+                             const char* rutaAudio,
+                             int duracionSegundos);
 };
 
 #endif // PLATAFORMA_H
