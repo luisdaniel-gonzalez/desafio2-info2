@@ -27,4 +27,15 @@ string creditos::getApellido() const {return apellido;}
 string creditos::getcodigoSociedad() const {return codigoSociedad;}
 string creditos::getRol() const {return rol;}
 
-void creditos::setNombre(const string &n)
+void creditos::setNombre(const string &n){
+    nombre = n;
+}
+void creditos::setApellido(const string &a){
+    apellido = a;
+}
+void creditos::setcodigoSociedad(const string &s){
+    codigoSociedad = cod;
+}
+void creditos::setRol(const string &r){
+    rol = r;
+}
