@@ -41,12 +41,6 @@ bool Plataforma::agregarUsuario(Usuario* usuario) {
     return true;
 }
 
-/*bool Plataforma::agregarArtista(Artista* artista) { //Jean la implementa artista, pero deberá estar
-    if (numArtistas >= 50) return false;
-    artistas[numArtistas++] = artista;
-    return true;
-}*/
-
 bool Plataforma::agregarPublicidad(Publicidad* pub) {
     if (numPublicidades >= 50) return false;
     publicidades[numPublicidades++] = pub;

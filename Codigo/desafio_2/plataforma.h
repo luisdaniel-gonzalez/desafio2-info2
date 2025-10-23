@@ -33,7 +33,6 @@ public:
     void guardarDatos();
 
     bool agregarUsuario(Usuario* usuario);
-    //bool agregarArtista(Artista* artista);
     bool agregarPublicidad(Publicidad* pub);
 
     bool buscarUsuario(const char* nickname);
