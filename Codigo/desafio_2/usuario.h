@@ -8,14 +8,14 @@ protected:
     char* ciudad;
     char* pais;
     char* fechaDeRegistro;
+    char* contrasena;
 
     char* copiarString(const char* str);
 
 public:
 
     Usuario();
-    Usuario(const char* nick, const char* tipo, const char* ciudad,
-            const char* pais, const char* fecha);
+    Usuario(const char* nick, const char* tipo, const char* ciudad, const char* pais, const char* fecha);
     Usuario(const Usuario& otro);
 
     virtual ~Usuario();
@@ -42,6 +42,7 @@ public:
 
     bool operator==(const Usuario& otro) const;
     Usuario& operator=(const Usuario& otro);
+    char *getContrasena() const;
 };
 
 #endif // USUARIO_H

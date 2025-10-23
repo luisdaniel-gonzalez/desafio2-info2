@@ -11,7 +11,7 @@ private:
 public:
 
     UsuarioEstandar();
-    UsuarioEstandar(const char* nick, const char* ciudad, const char* pais, const char* fecha);
+    UsuarioEstandar(const char* nick, const char* tipo, const char* ciudad, const char* pais, const char* fecha);
     UsuarioEstandar(const UsuarioEstandar& otro);
 
     ~UsuarioEstandar();
@@ -21,7 +21,7 @@ public:
 
     void setAnuncios(int cantidad);
 
-    void reproducirMusical();
+    void reproducirMusica();
     void mostrarInfo() const;
     void mostrarPublicidad();
 

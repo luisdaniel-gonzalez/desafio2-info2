@@ -13,7 +13,7 @@ private:
 public:
 
     UsuarioPremium();
-    UsuarioPremium(const char* nick, const char* ciudad, const char* pais, const char* fecha);
+    UsuarioPremium(const char* nick, const char* tipo, const char* ciudad, const char* pais, const char* fecha);
     UsuarioPremium(const UsuarioPremium& otro);
 
     ~UsuarioPremium();
