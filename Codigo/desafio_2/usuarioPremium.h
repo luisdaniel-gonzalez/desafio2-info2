@@ -6,7 +6,7 @@
 class UsuarioPremium : public Usuario {
 private:
     // Cancion** listaDeFavoritos;
-    int capacidadFavoritos;
+    int capacidadFavoritos[10000];
     int cantidadFavoritos;
     UsuarioPremium* siguiente;
 
