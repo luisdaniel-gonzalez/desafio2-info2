@@ -29,6 +29,10 @@ public:
 
     void agregarGenero(const string &g);
     void agregarCancion(const cancion &c);
+    void mostrar() const;
+
+    string getNombre() const;
+    string getPortada() const;
 };
 
 #endif // ALBUM_H
