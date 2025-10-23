@@ -1,7 +1,7 @@
 #include "creditos.h"
 #include <iostream>
 #include <string>
-
+#include <fstream>
 using namespace std;
 
 creditos::creditos() {}
