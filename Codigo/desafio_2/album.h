@@ -1,11 +1,8 @@
 #ifndef ALBUM_H
 #define ALBUM_H
-#include <iostream>
-#include <string>
 
-using namespace std;
 #include "cancion.h"
-class album
+class Album
 {
 private:
     string nombre;
@@ -17,22 +14,25 @@ private:
     int numGeneros;
     float puntuacion;
     float duracionTotal;
-    cancion *canciones;
+    Cancion *canciones;
     int numcanciones;
 
 public:
-    album();
-    album(string nom,int cod, string fecha, string sello, string portada);
-    album(const album &copia);
+    Album();
+    Album(string nom,int cod, string fecha, string sello, string portada);
+    Album(const Album &copia);
 
     ~Album();
 
     void agregarGenero(const string &g);
-    void agregarCancion(const cancion &c);
+    void agregarCancion(const Cancion &c);
     void mostrar() const;
 
+    float getPuntuacion() const;
     string getNombre() const;
     string getPortada() const;
+    int getCodigo() const;
+    void setPuntuacion(float p);
 };
 
 #endif // ALBUM_H

@@ -4,7 +4,7 @@
 #include <string>
 #include <fstream>
 using namespace std;
-album::album() {
+Album::Album() {
     numcanciones = 0;
     canciones = nullptr;
     numGeneros = 0;
@@ -12,12 +12,12 @@ album::album() {
     puntuacion = 0;
 }
 
-album::album(string nom, int cod, string fecha, string sel, string port):
+Album::Album(string nom, int cod, string fecha, string sel, string port):
     nombre(nom), codigo(cod), fechaDeLanzamiento(fecha),sello(sel), rutaPortada(port), numcanciones(0),numGeneros(0), duracionTotal(0), puntuacion(0) {
     canciones = nullptr;
 }
 
-album::album(const album &copia){
+Album::Album(const Album &copia){
     nombre = copia.nombre;
     codigo = copia.codigo;
     fechaDeLanzamiento = copia.fechaDeLanzamiento;
@@ -40,18 +40,18 @@ album::album(const album &copia){
     }
 }
 
-album::~album(){
+Album::~Album(){
     delete[] canciones;
 }
 
-void album::agregarGenero(const string &g) {
+void Album::AgregarGenero(const string &g) {
     if (numGeneros < 4) {
         genero[numGeneros] = g;
         numGeneros++;
     }
 }
 
-void album::agregarCancion(const Cancion &c) {
+void Album::agregarCancion(const Cancion &c) {
     Cancion *nuevoArr = new cancion[numcanciones + 1];
     for (int i = 0; i < numcanciones; i++)
         nuevoArr[i] = canciones[i];
@@ -64,7 +64,7 @@ void album::agregarCancion(const Cancion &c) {
     duracionTotal += c.getDuracion();
 }
 
-void album::mostrar() const{
+void Album::mostrar() const{
     cout<<"album: "<<nombre<<" ("<<fechaDeLanzamiento<<")"<<endl;
     cout<<"sello: "<<sello<<" puntuacion: "<<puntuacion<<endl;
     cout<<"generos: ";
@@ -76,20 +76,20 @@ void album::mostrar() const{
         canciones[i].mostrar();
 }
 
-string album::getNombre() const {
+string Album::getNombre() const {
     return nombre;
 }
-string album::getPortada() const {
+string Album::getPortada() const {
     return portadaRuta;
 }
-float album::getPuntuacion() const {
+float Album::getPuntuacion() const {
     return puntuacion;
 }
-int album::getCodigo() const {
+int Album::getCodigo() const {
     return codigo;
 }
 
-void album::setPuntuacion(float p) {
+void Album::setPuntuacion(float p) {
     puntuacion = p;
 }
 
