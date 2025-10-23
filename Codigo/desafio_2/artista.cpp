@@ -77,3 +77,55 @@ void Artista::setSeguidores(int s) {
 void Artista::setRanking(float r) {
     ranking = r;
 }
+
+void cargarArtistas(const string &nombreArchivo, Artista *&artistas, int &numArtistas) {
+    ifstream archivo(nombreArchivo.c_str());
+    if (!archivo) {
+        cout << "no se pudo abrir el archivo de artistas" << endl;
+        return;
+    }
+
+    string linea;
+    numArtistas = 0;
+    Artista *temp = nullptr;
+
+    while (getline(archivo, linea)) {
+        if (linea.empty()) continue;
+
+        int p1 = linea.find('|');
+        int p2 = linea.find('|', p1 + 1);
+        int p3 = linea.find('|', p2 + 1);
+        int p4 = linea.find('|', p3 + 1);
+        int p5 = linea.find('|', p4 + 1);
+
+        string nombre = linea.substr(0, p1);
+        string codStr = linea.substr(p1 + 1, p2 - p1 - 1);
+        string edadStr = linea.substr(p2 + 1, p3 - p2 - 1);
+        string pais = linea.substr(p3 + 1, p4 - p3 - 1);
+        string segStr = linea.substr(p4 + 1, p5 - p4 - 1);
+        string rankStr = linea.substr(p5 + 1);
+
+        int codigo = atoi(codStr.c_str());
+        int edad = atoi(edadStr.c_str());
+        int seguidores = atoi(segStr.c_str());
+        float ranking = atof(rankStr.c_str());
+
+        Artista nuevo(codigo, nombre, edad, pais);
+        nuevo.setSeguidores(seguidores);
+        nuevo.setRanking(ranking);
+
+        Artista *nuevoArr = new Artista[numArtistas + 1];
+        for (int i = 0; i < numArtistas; i++)
+            nuevoArr[i] = temp[i];
+        nuevoArr[numArtistas] = nuevo;
+
+        delete[] temp;
+        temp = nuevoArr;
+        numArtistas++;
+    }
+
+    archivo.close();
+    artistas = temp;
+
+    cout<<"artistas cargados: "<<numArtistas<<endl;
+}
