@@ -158,6 +158,44 @@ void Plataforma::medirConsumoRecursos(int iteraciones) const {
     cout << endl;
 }
 
+void Plataforma::mostrarReproduccion(const char* mensajePublicidad,
+                                     char categoriaPublicidad,
+                                     const char* cantante,
+                                     const char* album,
+                                     const char* rutaPortada,
+                                     const char* tituloCancion,
+                                     const char* rutaAudio,
+                                     int duracionSegundos) {
+
+    cout << "*****************************" << endl;
+
+    if (mensajePublicidad != nullptr && mensajePublicidad[0] != '\0') {
+        cout << "Mensaje publicitario: " << mensajePublicidad << endl;
+        cout << "Categoria del mensaje: " << categoriaPublicidad << endl;
+        cout << "*****************************" << endl;
+    }
+
+    cout << "Cantante: " << cantante << endl;
+    cout << "Album: " << album << endl;
+    cout << "Portada: " << rutaPortada << endl;
+    cout << "Titulo de la cancion: " << tituloCancion << endl;
+    cout << "Ruta del audio: " << rutaAudio << endl;
+    cout << "Duracion: " << duracionSegundos << " segundos" << endl;
+
+    cout << "Opciones de reproduccion:" << endl;
+    cout << "1.- Reproducir" << endl;
+    cout << "2.- Detener" << endl;
+
+    if (usuarioActual && strcmp(usuarioActual->getTipoDeMembresia(), "premium") == 0) {
+        cout << "3.- Siguiente" << endl;
+        cout << "4.- Anterior" << endl;
+        cout << "5.- Repetir canción" << endl;
+    }
+
+    cout << "*****************************" << endl;
+}
+
+
 int Plataforma::getCantidadUsuarios() const { return numUsuarios; }
 int Plataforma::getCantidadArtistas() const { return numArtistas; }
 int Plataforma::getCantidadPublicidades() const { return numPublicidades; }
