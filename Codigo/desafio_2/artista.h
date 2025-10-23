@@ -1,12 +1,8 @@
 #ifndef ARTISTA_H
 #define ARTISTA_H
-#include <iostream>
-#include <string>
-
-using namespace std;
 #include "album.h"
 
-class artista
+class Artista
 {
 private:
     int codigo;
@@ -15,21 +11,26 @@ private:
     string pais;
     int seguidores;
     int posicion;
-    alum *albumes;
+    Album *albumes;
     int numAlbumes;
+    int ranking;
 
 public:
-    artista();
-    artista(int cod,string nom, int ed, string pais);
-    artista(const artista &copia);
+    Artista();
+    Artista(int cod,string nom, int ed, string p);
+    Artista(const Artista &copia);
 
     ~Artista();
 
-    void agregarAlbum(const album &a);
+    void agregarAlbum(const Album &a);
     void mostrar() const;
 
     int getCodigo() const;
-    string getNombre;
-};
+    string getNombre() const;
+    string getPais() const;
+    int getEdad() const;
 
+    void setSeguidores(int s);
+    void setRanking(float r);
+};
 #endif // ARTISTA_H

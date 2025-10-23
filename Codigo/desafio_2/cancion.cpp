@@ -4,7 +4,7 @@
 #include <fstream>
 using namespace std;
 
-cancion::cancion() {
+Cancion::Cancion() {
     id = 0;
     duracion = 0;
     ruta = "";
@@ -13,14 +13,14 @@ cancion::cancion() {
     numCreditos = 0;
 }
 
-cancion::cancion(string nom, int id_,float dur,string ruta_):
+Cancion::Cancion(string nom, int id_,float dur,string ruta_):
     nombre(nom),id(id_),duracion(dur),ruta(ruta_),reproducciones(0),creditos(nullptr),numCreditos(0) {}
 
-cancion::cancion(const Cancion &copia){
+Cancion::Cancion(const Cancion &copia){
     nombre = copia.nombre;
     id = copia.id;
     duracion = copia.duracion;
-    rutaBase = copia.rutaBase;
+    ruta = copia.ruta;
     reproducciones = copia.reproducciones;
     numCreditos = copia.numCreditos;
     if (numCreditos > 0) {
@@ -47,14 +47,14 @@ void Cancion::agregarCredito(const Creditos &c) {
     numCreditos++;
 }
 
-void cancion::reproducir(int calidad) const{
+void Cancion::reproducir(int calidad) const{
     cout<<"reproduciendo "<<nombre<<" en "<<calidad<<" kbps/n"<<endl;
     cout<<"ruta: "<<ruta<<"-"<<calidad<<".ogg"<<endl;
-    cout<<"-"*20<<endl;
+    cout<<"**********************"<<endl;
 }
 
-void cancion::mostrar()const{
-    cout<<"cancion: "<<nombre<<" |ID: "<<id<<" |durracion: "<<duracion<<"min"<<endl;
+void Cancion::mostrar()const{
+    cout<<"cancion: "<<nombre<<" |ID: "<<id<<" |duracion: "<<duracion<<"min"<<endl;
     for(int i=0; i<numCreditos;i++){
         creditos[i].mostrar();
     }
@@ -72,13 +72,13 @@ float Cancion::getDuracion() const {
 int Cancion::getReproducciones() const {
     return reproducciones;
 }
-string Cancion::getRutaBase() const {
-    return rutaBase;
+string Cancion::getRuta() const {
+    return ruta;
 }
 
 //ahora comenzamos con las funciones para abrir el archivo
 
-void cargarCanciones(const string &nombreArchivo, cancion *&canciones, int &numCanciones) {
+void cargarCanciones(const string &nombreArchivo, Cancion *&canciones, int &numCanciones) {
     ifstream archivo(nombreArchivo.c_str());
     if (!archivo) {
         cout << "no se pudo abrir el archivo de canciones" << endl;
@@ -86,8 +86,8 @@ void cargarCanciones(const string &nombreArchivo, cancion *&canciones, int &numC
     }
 
     string linea;
-    numCanciones;
-    concion *temp = nullptr;
+    numCanciones = 0;
+    Cancion *temp = nullptr;
     while (getline(archivo, linea)) {
         if (linea.empty()) continue;
 
@@ -106,7 +106,7 @@ void cargarCanciones(const string &nombreArchivo, cancion *&canciones, int &numC
         float duracion = atof(durStr.c_str());
         int reproducciones = atoi(repStr.c_str());
 
-        cancion nueva(nombre, id, duracion, ruta);
+        Cancion nueva(nombre, id, duracion, ruta);
 
         Cancion *nuevoArr = new Cancion[numCanciones + 1];
         for (int i = 0; i < numCanciones; i++)

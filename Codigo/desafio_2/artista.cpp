@@ -4,26 +4,40 @@
 #include <string>
 #include <fstream>
 using namespace std;
-artista::artista() {
+Artista::Artista() {
     albumes = nullptr;
     numAlbumes = 0;
     codigo = 0;
     edad = 0;
     seguidores = 0;
     posicion = 0;
+    ranking = 0;
 }
 
-artista::artista(const artista &copia){
+Artista::Artista(int cod, string nom, int ed, string p){
+    codigo = cod;
+    nombre = nom;
+    edad = ed;
+    pais = p;
+    seguidores =0;
+    posicion = 0;
+    numAlbumes=0;
+    albumes = nullptr;
+    ranking =0;
+}
+
+Artista::Artista(const Artista &copia){
     codigo = copia.codigo;
     nombre = copia.nombre;
     edad = copia.edad;
     pais = copia.pais;
     seguidores = copia.seguidores;
     posicion = copia.posicion;
+    ranking = copia.ranking;
     numAlbumes = copia.numAlbumes;
 
     if(numAlbumes > 0){
-        albumnes = new album[numAlbumes];
+        albumes = new Album[numAlbumes];
         for(int i =0;i<numAlbumes;i++){
             albumes[i]=copia.albumes[i];
         }
@@ -33,12 +47,12 @@ artista::artista(const artista &copia){
     }
 }
 
-artista::~Artista() {
+Artista::~Artista() {
     delete[] albumes;
 }
 
-void artista::agregarAlbum(const album &a){
-    album *nuevoArr = new album[numAlbumes + 1];
+void Artista::agregarAlbum(const Album &a){
+    Album *nuevoArr = new Album[numAlbumes + 1];
     for (int i = 0; i < numAlbumes; i++)
         nuevoArr[i] = albumes[i];
     nuevoArr[numAlbumes] = a;
@@ -48,9 +62,9 @@ void artista::agregarAlbum(const album &a){
     numAlbumes++;
 }
 
-void artista::mostrar() const{
+void Artista::mostrar() const{
     cout<<"artista: "<<nombre<<" ("<<pais<<") "<<endl;
-    cout<<"edad: "<<edad<<" seguidores: "<<seguidores<<"posicion global: "<<posicion<<endl;
+    cout<<"edad: "<<edad<<" seguidores: "<<seguidores<<"posicion global: "<<ranking<<endl;
 
     for(int i=0;i<numAlbumes;i++){
         cout<<"album:"<<i+1<<"---\n";
@@ -58,27 +72,27 @@ void artista::mostrar() const{
     }
 }
 
-int artista::getCodigo() const {
+int Artista::getCodigo() const {
     return codigo;
 }
-string artista::getNombre() const {
+string Artista::getNombre() const {
     return nombre;
 }
-string artista::getPais() const {
+string Artista::getPais() const {
     return pais;
 }
-int artista::getEdad() const {
+int Artista::getEdad() const {
     return edad;
 }
 
-void artista::setSeguidores(int s) {
+void Artista::setSeguidores(int s) {
     seguidores = s;
 }
-void artista::setpPosicion(float r) {
-    ranking = r;
+void Artista::setRanking(float r) {
+    posicion = r;
 }
 
-void cargarArtistas(const string &nombreArchivo, artista *&artistas, int &numArtistas) {
+void cargarArtistas(const string &nombreArchivo, Artista *&artistas, int &numArtistas) {
     ifstream archivo(nombreArchivo.c_str());
     if (!archivo) {
         cout << "no se pudo abrir el archivo de artistas" << endl;
@@ -87,7 +101,7 @@ void cargarArtistas(const string &nombreArchivo, artista *&artistas, int &numArt
 
     string linea;
     numArtistas = 0;
-    artista *temp = nullptr;
+    Artista *temp = nullptr;
 
     while (getline(archivo, linea)) {
         if (linea.empty()) continue;
@@ -103,18 +117,18 @@ void cargarArtistas(const string &nombreArchivo, artista *&artistas, int &numArt
         string edadStr = linea.substr(p2 + 1, p3 - p2 - 1);
         string pais = linea.substr(p3 + 1, p4 - p3 - 1);
         string segStr = linea.substr(p4 + 1, p5 - p4 - 1);
-        string posiStr = linea.substr(p5 + 1);
+        string rankStr = linea.substr(p5 + 1);
 
         int codigo = atoi(codStr.c_str());
         int edad = atoi(edadStr.c_str());
         int seguidores = atoi(segStr.c_str());
-        float posicion = atof(posiStr.c_str());
+        float ranking = atof(rankStr.c_str());
 
-        artista nuevo(codigo, nombre, edad, pais);
+        Artista nuevo(codigo, nombre, edad, pais);
         nuevo.setSeguidores(seguidores);
-        nuevo.setPosicion(posicion);
+        nuevo.setRanking(ranking);
 
-        artista *nuevoArr = new Artista[numArtistas + 1];
+        Artista *nuevoArr = new Artista[numArtistas + 1];
         for (int i = 0; i < numArtistas; i++)
             nuevoArr[i] = temp[i];
         nuevoArr[numArtistas] = nuevo;

@@ -3,7 +3,7 @@
 #include <string>
 using namespace std;
 
-class creditos
+class Creditos
 {
 private:
     string nombre;
@@ -12,9 +12,9 @@ private:
     string rol;
 
 public:
-    creditos();
-    creditos(string nom, string ape, string cod, string rol);
-    creditos(const creditos &c);
+    Creditos();
+    Creditos(string nom, string ape, string cod, string rol);
+    Creditos(const Creditos &c);
 
     ~Creditos();
 
@@ -22,7 +22,7 @@ public:
 
     string getNombre() const;
     string getApellido() const;
-    string getcaodigoSociedad() const;
+    string getcodigoSociedad() const;
     string getRol() const;
     void setNombre(const string &n);
     void setApellido(const string &a);

@@ -31,7 +31,7 @@ Album::Album(const Album &copia){
     for (int i = 0; i < numGeneros; i++)
         genero[i] = copia.genero[i];
     if (numcanciones > 0) {
-        canciones = new cancion[numcanciones];
+        canciones = new Cancion[numcanciones];
         for (int i = 0; i < numcanciones; i++)
             canciones[i] = copia.canciones[i];
     }
@@ -44,7 +44,7 @@ Album::~Album(){
     delete[] canciones;
 }
 
-void Album::AgregarGenero(const string &g) {
+void Album::agregarGenero(const string &g) {
     if (numGeneros < 4) {
         genero[numGeneros] = g;
         numGeneros++;
@@ -52,7 +52,7 @@ void Album::AgregarGenero(const string &g) {
 }
 
 void Album::agregarCancion(const Cancion &c) {
-    Cancion *nuevoArr = new cancion[numcanciones + 1];
+    Cancion *nuevoArr = new Cancion[numcanciones + 1];
     for (int i = 0; i < numcanciones; i++)
         nuevoArr[i] = canciones[i];
     nuevoArr[numcanciones] = c;
@@ -80,7 +80,7 @@ string Album::getNombre() const {
     return nombre;
 }
 string Album::getPortada() const {
-    return portadaRuta;
+    return rutaPortada;
 }
 float Album::getPuntuacion() const {
     return puntuacion;

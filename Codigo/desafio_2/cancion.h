@@ -1,11 +1,8 @@
 #ifndef CANCION_H
 #define CANCION_H
-#include <iostream>
-#include <string>
-using namespace std;
 #include "creditos.h"
 
-class cancion
+class Cancion
 {
 private:
     string nombre;
@@ -13,17 +10,17 @@ private:
     float duracion;
     string ruta;
     int reproducciones;
-    creditos *creditos;
+    Creditos *creditos;
     int numCreditos;
 
 public:
-    cancion();
-    cancion(string nom,int id, float dur,string rut);
-    cancion(const Cancion &copia);
+    Cancion();
+    Cancion(string nom,int id, float dur,string rut);
+    Cancion(const Cancion &copia);
 
     ~Cancion();
 
-    void agregarCredito(const creditos &c);
+    void agregarCredito(const Creditos &c);
     void reproducir(int calidad) const;
     void mostrar() const;
 
@@ -31,7 +28,7 @@ public:
     string getNombre() const;
     float getDuracion() const;
     int getReproducciones() const;
-    string Ruta() const;
+    string getRuta() const;
 };
 
 #endif // CANCION_H

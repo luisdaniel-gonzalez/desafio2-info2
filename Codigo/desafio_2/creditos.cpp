@@ -4,43 +4,43 @@
 #include <fstream>
 using namespace std;
 
-creditos::creditos() {}
+Creditos::Creditos() {}
 
-creditos::creditos(string nom, string ape, string cod, string rol):
+Creditos::Creditos(string nom, string ape, string cod, string r):
     nombre(nom),apellido(ape),codigoSociedad(cod),rol(r) {}
 
-creditos::creditos(const credito &c){
+Creditos::Creditos(const Creditos &c){
     nombre = c.nombre;
     apellido = c.apellido;
     codigoSociedad = c.codigoSociedad;
     rol = c.rol;
 }
 
-creditos::~Creditos() {}
+Creditos::~Creditos() {}
 
-void creditos::mostrar() const{
+void Creditos::mostrar() const{
     cout<<rol<<": "<<nombre<<" "<<apellido<<" ("<<codigoSociedad<<")"<<endl;
 }
 
-string creditos::getNombre() const {return nombre;}
-string creditos::getApellido() const {return apellido;}
-string creditos::getcodigoSociedad() const {return codigoSociedad;}
-string creditos::getRol() const {return rol;}
+string Creditos::getNombre() const {return nombre;}
+string Creditos::getApellido() const {return apellido;}
+string Creditos::getcodigoSociedad() const {return codigoSociedad;}
+string Creditos::getRol() const {return rol;}
 
-void creditos::setNombre(const string &n){
+void Creditos::setNombre(const string &n){
     nombre = n;
 }
-void creditos::setApellido(const string &a){
+void Creditos::setApellido(const string &a){
     apellido = a;
 }
-void creditos::setcodigoSociedad(const string &s){
-    codigoSociedad = cod;
+void Creditos::setcodigoSociedad(const string &s){
+    codigoSociedad = s;
 }
-void creditos::setRol(const string &r){
+void Creditos::setRol(const string &r){
     rol = r;
 }
 
-void cargarCreditos(const string &nombreArchivo, creditos *&creditos,int numCreditos){
+void cargarCreditos(const string &nombreArchivo, Creditos *&creditos,int &numCreditos){
     ifstream archivo(nombreArchivo.c_str());
     if(!archivo){
         cout<<"no se encontro el archivo de creditos"<<endl;
@@ -48,7 +48,7 @@ void cargarCreditos(const string &nombreArchivo, creditos *&creditos,int numCred
     }
     string linea;
     numCreditos = 0;
-    creditos *temp = nullptr;
+    Creditos *temp = nullptr;
 
     while(getline(archivo,linea)){
         if (linea.empty()) continue;
