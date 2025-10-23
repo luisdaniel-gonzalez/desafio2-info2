@@ -3,7 +3,11 @@
 
 #include "usuario.h"
 #include "publicidad.h"
-//#include "artista.h" // Lo hace jean
+//#include "artista.h" // Lo hace Jean
+//#include "album.h" // Lo hace Jean
+//#include "cancion.h" // Lo hace Jean
+//#include "credito.h" // Lo hace Jean
+
 
 class Plataforma {
 private:
@@ -41,6 +45,10 @@ public:
 
     void reproduccionAleatoria();
     void mostrarPublicidadPonderada();
+
+    void mostrarUsuarios();
+    void mostrarArtistas();
+    void mostrarPublicidades();
 
     void gestionarListaFavoritos();
     void mostrarMenu();
