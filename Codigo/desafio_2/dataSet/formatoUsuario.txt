@@ -1,0 +1,1 @@
+nickname|contrasena|membresia|ciudad|pais|nacimiento|

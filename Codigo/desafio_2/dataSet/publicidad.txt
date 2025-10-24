@@ -1,0 +1,50 @@
+1|AAA|Bienvenido a la UdeA, donde el conocimiento transforma vidas!|
+2|AAA|Estudia Ingenieria en la Universidad de Antioquia y cambia el mundo.|
+3|AAA|Orgullo UdeA: pasion, ciencia y compromiso.|
+4|B|Ejecuta tu codigo con pasion, no con miedo al error.|
+5|B|Si compila a la primera, desconfia, el profe Augusto tiene un reto nuevo.|
+6|B|Recuerda comentar tu codigo, o el profe Augusto lo hara por ti.|
+7|AAA|En la UdeA no solo aprendemos, tambien innovamos.|
+8|AAA|La Universidad de Antioquia: conocimiento al servicio de la sociedad.|
+9|AAA|Conecta tu pasion con la ciencia en la UdeA.|
+10|B|El bug es temporal, la logica es eterna.|
+11|C|Profe Augusto dice: No uses STL… todavia.|
+12|C|Un codigo limpio es un codigo feliz|
+13|AAA|Ciencia, cultura y libertad.|
+14|B|No olvides liberar la memoria, ni estudiar para el parcial.|
+15|AAA|Estudia, crea y transforma desde la Universidad de Antioquia.|
+16|AAA|Listo para compilar tus sueños? Hazlo en la UdeA.|
+17|AAA|Ingenieria UdeA: talento que deja huella.|
+18|B|Cuando todo falla, revisa los punteros.|
+19|B|La vida es como un puntero nulo, si no la inicializas, no sirve.|
+20|AAA|Formamos ingenieros con proposito y pasion.|
+21|AAA|Conocimiento que trasciende fronteras, solo en la UdeA.|
+22|C|Si no entiendes el error, probablemente es un punto y coma faltante.|
+23|B|El compilador no se equivoca, tu si.|
+24|AAA|Investiga, aprende y crece con la Universidad de Antioquia.|
+25|AAA|Aqui nacen los mejores ingenieros del pais.|
+26|AAA|Conectando mentes, transformando realidades.|
+27|B|Augusto recomienda: No STL.|
+28|AAA|El conocimiento es poder, en la UdeA lo compartimos.|
+29|AAA|Educacion publica, gratuita y de calidad: eso es UdeA.|
+30|B|No temas al codigo, teme a no entenderlo.|
+31|AAA|Una comunidad de saber que inspira.|
+32|AAA|Ingenieria UdeA: donde la logica y la creatividad se encuentran.|
+33|B|La depuracion tambien es arte.|
+34|B|Los punteros no muerden… si sabes usarlos.|
+35|AAA|Mas que una universidad, una familia.|
+36|C|Si el codigo funciona, no lo toques.|
+37|AAA|Excelencia academica al servicio del pais.|
+38|B|Nunca subestimes el poder de un buen bucle.|
+39|AAA|Ciencia para la vida, educacion para el futuro.|
+40|B|printf o cout, lo importante es entender el flujo.|
+41|C|La paciencia es la mejor herramienta del programador|
+42|AAA|Estudia ingenieria, crea futuro, vive UdeA.|
+43|B|Los errores son oportunidades de aprendizaje.|
+44|AAA|Tu codigo empieza aqui: Universidad de Antioquia.|
+45|AAA|Donde la pasion por aprender nunca se detiene.|
+46|B|Compren el curso de Info 2.|
+47|AAA|Transformando el conocimiento en progreso.|
+48|C|Cuidado con los punteros dobles, son como los dobles sentidos.|
+49|B|Un programador feliz eres tu.|
+50|AAA|UdeA: orgullo antioqueño, conocimiento universal.|
