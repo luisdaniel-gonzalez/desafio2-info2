@@ -2,22 +2,20 @@
 #define PLATAFORMA_H
 
 #include "usuario.h"
-#include "publicidad.h"
-//#include "artista.h" // Lo hace Jean
-//#include "album.h" // Lo hace Jean
-//#include "cancion.h" // Lo hace Jean
-//#include "credito.h" // Lo hace Jean
+#include "artista.h"
 
+class Publicidad;
 
 class Plataforma {
 private:
     Usuario* usuarios[100];
-    //Artista* artistas[50];
+    Artista* artistas[50];
     Publicidad* publicidades[50];
 
     int numUsuarios;
     int numArtistas;
     int numPublicidades;
+    int contadorCanciones;
 
     Usuario* usuarioActual;
     int ultimaPublicidadMostrada;
@@ -29,7 +27,7 @@ public:
     Plataforma();
     ~Plataforma();
 
-    void cargarDatos();
+    void cargarDatos(const string &nombreArchivo, Plataforma &plataforma);
     void guardarDatos();
 
     bool agregarUsuario(Usuario* usuario);
@@ -37,8 +35,9 @@ public:
 
     bool buscarUsuario(const char* nickname);
     Usuario* obtenerUsuario(const char* nickname);
+    Usuario* obtenerContrasena(const char* contrasena);
 
-    bool iniciarSesion(const char* nickname);
+    bool iniciarSesion(const char* nickname, const char* contrasena);
     void cerrarSesion();
     Usuario* getUsuarioActual() const;
 
@@ -66,7 +65,9 @@ public:
                              const char* rutaPortada,
                              const char* tituloCancion,
                              const char* rutaAudio,
-                             int duracionSegundos);
+                             int duracionSegundos,
+                             bool modoRepetir,
+                             Usuario* usuario);
 };
 
 #endif // PLATAFORMA_H

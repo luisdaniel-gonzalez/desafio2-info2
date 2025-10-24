@@ -1,13 +1,19 @@
 #include "plataforma.h"
-//#include "artista.h"
 #include <iostream>
 #include <cstring>
+#include "usuario.h"
+#include "usuarioEstandar.h"
+#include "usuarioPremium.h"
+#include <fstream>
+#include "publicidad.h"
+
 using namespace std;
 
 Plataforma::Plataforma() {
     numUsuarios = 0;
     numArtistas = 0;
     numPublicidades = 0;
+    contadorCanciones = 0;
     usuarioActual = nullptr;
     ultimaPublicidadMostrada = -1;
 }
@@ -17,7 +23,7 @@ Plataforma::~Plataforma() {
         delete usuarios[i];
     }
     for (int i = 0; i < numArtistas; i++) {
-     //   delete artistas[i];
+        delete artistas[i];
     }
     for (int i = 0; i < numPublicidades; i++) {
         delete publicidades[i];
@@ -42,9 +48,11 @@ bool Plataforma::agregarUsuario(Usuario* usuario) {
 }
 
 bool Plataforma::agregarPublicidad(Publicidad* pub) {
-    if (numPublicidades >= 50) return false;
-    publicidades[numPublicidades++] = pub;
-    return true;
+    if (numPublicidades < 50) {
+        publicidades[numPublicidades++] = pub;
+        return true;
+    }
+    return false;
 }
 
 bool Plataforma::buscarUsuario(const char* nickname) {
@@ -61,9 +69,18 @@ Usuario* Plataforma::obtenerUsuario(const char* nickname) {
     return nullptr;
 }
 
-bool Plataforma::iniciarSesion(const char* nickname) {
+
+Usuario* Plataforma::obtenerContrasena(const char* contrasena) {
+    for (int i = 0; i < numUsuarios; i++)
+        if (compararStrings(usuarios[i]->getContrasena(), contrasena) == 0)
+            return usuarios[i];
+    return nullptr;
+}
+
+bool Plataforma::iniciarSesion(const char* nickname, const char* contrasena) {
     Usuario* u = obtenerUsuario(nickname);
-    if (u) {
+    Usuario* p = obtenerContrasena(contrasena);
+    if (u && p != nullptr) {
         usuarioActual = u;
         return true;
     }
@@ -115,12 +132,6 @@ void Plataforma::mostrarUsuarios() {
         usuarios[i]->mostrarInfo();
 }
 
-/*void Plataforma::mostrarArtistas() {
-    cout << "Artistas registrados:" << endl;
-    for (int i = 0; i < numArtistas; i++) // Implementar de Jean
-        artistas[i]->mostrarInfo();
-}*/
-
 void Plataforma::mostrarPublicidades() {
     cout << "Publicidades registradas:" << endl;
     for (int i = 0; i < numPublicidades; i++)
@@ -133,6 +144,49 @@ void Plataforma::gestionarListaFavoritos() {
         return;
     }
     cout << "Gestionando lista de favoritos de: " << usuarioActual->getNickname() << endl;
+}
+
+void Plataforma::cargarDatos(const string &nombreArchivo, Plataforma &plataforma) {
+    ifstream archivo(nombreArchivo.c_str());
+    if (!archivo) {
+        cout << "Error en nuestro sistema de usuarios" << endl;
+        return;
+    }
+
+    string linea;
+
+    int count = 0;
+
+    while (getline(archivo, linea)) {
+        if (linea.empty()) continue;
+
+        int p1 = linea.find('|');
+        int p2 = linea.find('|', p1 + 1);
+        int p3 = linea.find('|', p2 + 1);
+        int p4 = linea.find('|', p3 + 1);
+        int p5 = linea.find('|', p4 + 1);
+
+        string nickname = linea.substr(0, p1);
+        string contrasena = linea.substr(p1 + 1, p2 - p1 - 1);
+        string membresia = linea.substr(p2 + 1, p3 - p2 - 1);
+        string ciudad = linea.substr(p3 + 1, p4 - p3 - 1);
+        string pais = linea.substr(p4 + 1, p5 - p4 - 1);
+        string nacimiento = linea.substr(p5 + 1);
+
+        Usuario* nuevoUsuario = nullptr;
+
+        if (membresia == "premium") {
+            nuevoUsuario = new UsuarioPremium(nickname.c_str(), contrasena.c_str(), membresia.c_str(),
+                                              ciudad.c_str(), pais.c_str(), nacimiento.c_str());
+        } else {
+            nuevoUsuario = new UsuarioEstandar(nickname.c_str(), contrasena.c_str(), membresia.c_str(),
+                                               ciudad.c_str(), pais.c_str(), nacimiento.c_str());
+        }
+
+        if (plataforma.agregarUsuario(nuevoUsuario)) {
+            count = count + 1;
+        }
+    } archivo.close();
 }
 
 int Plataforma::calcularMemoriaTotal() const {
@@ -159,35 +213,56 @@ void Plataforma::mostrarReproduccion(const char* mensajePublicidad,
                                      const char* rutaPortada,
                                      const char* tituloCancion,
                                      const char* rutaAudio,
-                                     int duracionSegundos) {
+                                     int duracionSegundos,
+                                     bool modoRepetir,
+                                     Usuario* usuario) {
+
+    contadorCanciones = 0;
+
+    if (strcmp(usuario->getTipoDeMembresia(), "estandar") == 0 &&
+        contadorCanciones % 2 == 0 && contadorCanciones > 0) {
+        mostrarPublicidadPonderada();
+    }
 
     cout << "*****************************" << endl;
 
-    if (mensajePublicidad != nullptr && mensajePublicidad[0] != '\0') {
-        cout << "Mensaje publicitario: " << mensajePublicidad << endl;
-        cout << "Categoria del mensaje: " << categoriaPublicidad << endl;
+    if (strcmp(usuario->getTipoDeMembresia(), "estandar") == 0 &&
+        contadorCanciones % 2 == 0 && contadorCanciones > 0) {
         cout << "*****************************" << endl;
+    }
+
+
+    if (strcmp(usuario->getTipoDeMembresia(), "premium") != 0) {
+        cout << "\nESPACIO PUBLICITARIO" << endl;
+        mostrarPublicidadPonderada();
+        cout << endl;
+    } else {
+        cout << endl;
     }
 
     cout << "Cantante: " << cantante << endl;
     cout << "Album: " << album << endl;
     cout << "Portada: " << rutaPortada << endl;
-    cout << "Titulo de la cancion: " << tituloCancion << endl;
-    cout << "Ruta del audio: " << rutaAudio << endl;
+    cout << "Titulo: " << tituloCancion << endl;
+    cout << "Ruta del audio: " << rutaAudio << "-" << usuario->getCalidadAudio() << ".ogg" << endl;
     cout << "Duracion: " << duracionSegundos << " segundos" << endl;
+
+
+    if (modoRepetir) {
+        cout << "Repetir: ACTIVADO" << endl;
+    }
 
     cout << "Opciones de reproduccion:" << endl;
     cout << "1.- Reproducir" << endl;
     cout << "2.- Detener" << endl;
 
-    if (usuarioActual && strcmp(usuarioActual->getTipoDeMembresia(), "premium") == 0) {
+    if (strcmp(usuario->getTipoDeMembresia(), "premium") == 0) {
         cout << "3.- Siguiente" << endl;
         cout << "4.- Anterior" << endl;
-        cout << "5.- Repetir canción" << endl;
+        cout << "5.- Repetir cancion" << endl;
     }
-
-    cout << "*****************************" << endl;
 }
+
 
 
 int Plataforma::getCantidadUsuarios() const { return numUsuarios; }

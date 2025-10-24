@@ -31,15 +31,17 @@ char* Usuario::copiarString(const char* str) {
 
 Usuario::Usuario() {
     nickname = nullptr;
+    contrasena = nullptr;
     tipoDeMembresia = nullptr;
     ciudad = nullptr;
     pais = nullptr;
     fechaDeRegistro = nullptr;
 }
 
-Usuario::Usuario(const char* nick, const char* tipo, const char* ciudad,
+Usuario::Usuario(const char* nick, const char* contrasena, const char* tipo, const char* ciudad,
                  const char* pais, const char* fecha) {
     nickname = copiarString(nick);
+    this->contrasena = copiarString(contrasena);
     tipoDeMembresia = copiarString(tipo);
     this->ciudad = copiarString(ciudad);
     this->pais = copiarString(pais);
@@ -48,6 +50,7 @@ Usuario::Usuario(const char* nick, const char* tipo, const char* ciudad,
 
 Usuario::Usuario(const Usuario& otro) {
     nickname = copiarString(otro.nickname);
+    contrasena = copiarString(otro.contrasena);
     tipoDeMembresia = copiarString(otro.tipoDeMembresia);
     ciudad = copiarString(otro.ciudad);
     pais = copiarString(otro.pais);
@@ -56,6 +59,7 @@ Usuario::Usuario(const Usuario& otro) {
 
 Usuario::~Usuario() {
     if (nickname != nullptr) delete[] nickname;
+    if (contrasena != nullptr) delete[] contrasena;
     if (tipoDeMembresia != nullptr) delete[] tipoDeMembresia;
     if (ciudad != nullptr) delete[] ciudad;
     if (pais != nullptr) delete[] pais;
@@ -154,12 +158,14 @@ bool Usuario::operator==(const Usuario& otro) const {
 Usuario& Usuario::operator=(const Usuario& otro) {
     if (this != &otro) {
         if (nickname != nullptr) delete[] nickname;
+        if (contrasena != nullptr) delete[] contrasena;
         if (tipoDeMembresia != nullptr) delete[] tipoDeMembresia;
         if (ciudad != nullptr) delete[] ciudad;
         if (pais != nullptr) delete[] pais;
         if (fechaDeRegistro != nullptr) delete[] fechaDeRegistro;
 
         nickname = copiarString(otro.nickname);
+        contrasena = copiarString(otro.contrasena);
         tipoDeMembresia = copiarString(otro.tipoDeMembresia);
         ciudad = copiarString(otro.ciudad);
         pais = copiarString(otro.pais);

@@ -7,8 +7,8 @@ UsuarioPremium::UsuarioPremium() : Usuario(), cantidadFavoritos(0), siguiente(nu
     memset(capacidadFavoritos, 0, sizeof(capacidadFavoritos));
 }
 
-UsuarioPremium::UsuarioPremium(const char* nick, const char* tipo, const char* ciudad, const char* pais, const char* fecha)
-    : Usuario(nick, tipo, ciudad, pais, fecha), cantidadFavoritos(0), siguiente(nullptr) {
+UsuarioPremium::UsuarioPremium(const char* nick, const char* contrasena, const char* tipo, const char* ciudad, const char* pais, const char* fecha)
+    : Usuario(nick, contrasena, tipo, ciudad, pais, fecha), cantidadFavoritos(0), siguiente(nullptr) {
     memset(capacidadFavoritos, 0, sizeof(capacidadFavoritos));
 }
 

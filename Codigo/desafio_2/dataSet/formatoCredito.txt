@@ -1,1 +1,1 @@
-P,C o M|nombreApellido|codigoAfiliacion|
+rol1|nombre1|apellido1|codigo1|rol2|nombre2|apellido2|codigo2|rol3|nombre3|apellido3|codigo3|

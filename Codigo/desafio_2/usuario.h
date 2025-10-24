@@ -15,7 +15,7 @@ protected:
 public:
 
     Usuario();
-    Usuario(const char* nick, const char* tipo, const char* ciudad, const char* pais, const char* fecha);
+    Usuario(const char* nick, const char* contrasena, const char* tipo, const char* ciudad, const char* pais, const char* fecha);
     Usuario(const Usuario& otro);
 
     virtual ~Usuario();

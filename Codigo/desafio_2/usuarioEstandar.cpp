@@ -5,8 +5,8 @@ using namespace std;
 
 UsuarioEstandar::UsuarioEstandar() : Usuario(), anuncios(0) {}
 
-UsuarioEstandar::UsuarioEstandar(const char* nick, const char* tipo, const char* ciudad, const char* pais, const char* fecha)
-    : Usuario(nick, tipo, ciudad, pais, fecha), anuncios(0) {}
+UsuarioEstandar::UsuarioEstandar(const char* nick,const char* contrasena, const char* tipo, const char* ciudad, const char* pais, const char* fecha)
+    : Usuario(nick, contrasena, tipo, ciudad, pais, fecha), anuncios(0) {}
 
 UsuarioEstandar::UsuarioEstandar(const UsuarioEstandar& otro)
     : Usuario(otro), anuncios(otro.anuncios) {}

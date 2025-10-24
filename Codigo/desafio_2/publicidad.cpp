@@ -1,6 +1,9 @@
 #include "publicidad.h"
 #include <iostream>
 #include <cstring>
+#include <fstream>
+#include "plataforma.h"
+
 using namespace std;
 
 char* Publicidad::copiarString(const char* str) {
@@ -47,6 +50,38 @@ void Publicidad::setCategoria(char cat) {
 
 void Publicidad::setPrioridad(int p) {
     prioridad = p;
+}
+
+void Publicidad::cargarPublicidades(const string &nombreArchivo, Plataforma &plataforma, int &numPublicidades) {
+    ifstream archivo(nombreArchivo.c_str());
+    if (!archivo) {
+        cout << "Error en nuestro sistema de publicidad" << endl;
+        return;
+    }
+
+    string linea;
+    int count = 0;
+
+    while (getline(archivo, linea)) {
+        if (linea.empty()) continue;
+
+        int p1 = linea.find('|');
+        int p2 = linea.find('|', p1 + 1);
+
+        string indicePub = linea.substr(0, p1);
+        string categoriaPub = linea.substr(p1 + 1, p2 - p1 - 1);
+        string mensajePub = linea.substr(p2 + 1);
+
+        char categoria = categoriaPub[0];
+
+        Publicidad *nueva = new Publicidad(mensajePub.c_str(), categoria);
+        nueva->setPrioridad(3 - (count % 3));
+        plataforma.agregarPublicidad(nueva);
+
+        count++;
+    }
+
+    archivo.close();
 }
 
 void Publicidad::mostrar() const {
