@@ -28,6 +28,7 @@ public:
     void setApellido(const string &a);
     void setcodigoSociedad(const string &s);
     void setRol(const string &r);
+    void cargarCreditos(const string &nombreArchivo, Creditos *&creditos,int &numCreditos);
 };
 
 #endif // CREDITOS_H

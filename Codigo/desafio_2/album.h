@@ -1,7 +1,7 @@
 #ifndef ALBUM_H
 #define ALBUM_H
-
 #include "cancion.h"
+
 class Album
 {
 private:
@@ -16,6 +16,7 @@ private:
     float duracionTotal;
     Cancion *canciones;
     int numcanciones;
+    int IdAlbum;
 
 public:
     Album();
@@ -31,8 +32,9 @@ public:
     float getPuntuacion() const;
     string getNombre() const;
     string getPortada() const;
-    int getCodigo() const;
+    int getIdAlbum() const;
     void setPuntuacion(float p);
+    void cargarAlbumes(const string &nombreArchivo, Album *&albumes, int &numAlbumes);
 };
 
 #endif // ALBUM_H

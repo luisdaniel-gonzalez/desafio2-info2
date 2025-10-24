@@ -2,7 +2,14 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <cstring>
+
 using namespace std;
+
+void Cancion::setReproducciones(int newReproducciones)
+{
+    reproducciones = newReproducciones;
+}
 
 Cancion::Cancion() {
     id = 0;
@@ -20,7 +27,7 @@ Cancion::Cancion(const Cancion &copia){
     nombre = copia.nombre;
     id = copia.id;
     duracion = copia.duracion;
-    ruta = copia.ruta;
+    rutaBase = copia.rutaBase;
     reproducciones = copia.reproducciones;
     numCreditos = copia.numCreditos;
     if (numCreditos > 0) {
@@ -48,9 +55,9 @@ void Cancion::agregarCredito(const Creditos &c) {
 }
 
 void Cancion::reproducir(int calidad) const{
-    cout<<"reproduciendo "<<nombre<<" en "<<calidad<<" kbps/n"<<endl;
+    cout<<"Reproduciendo "<<nombre<<" en "<<calidad<<" kbps/n"<<endl;
     cout<<"ruta: "<<ruta<<"-"<<calidad<<".ogg"<<endl;
-    cout<<"**********************"<<endl;
+    cout<< "********************" <<endl;
 }
 
 void Cancion::mostrar()const{
@@ -63,6 +70,11 @@ void Cancion::mostrar()const{
 int Cancion::getId() const {
     return id;
 }
+
+int Cancion::getIdAlbum() const
+{
+    return idAlbum;
+}
 string Cancion::getNombre() const {
     return nombre;
 }
@@ -72,52 +84,58 @@ float Cancion::getDuracion() const {
 int Cancion::getReproducciones() const {
     return reproducciones;
 }
-string Cancion::getRuta() const {
-    return ruta;
+string Cancion::getRutaBase() const {
+    return rutaBase;
 }
 
-//ahora comenzamos con las funciones para abrir el archivo
-
-void cargarCanciones(const string &nombreArchivo, Cancion *&canciones, int &numCanciones) {
+void Cancion::cargarCanciones(const string &nombreArchivo, Cancion *&canciones, int &numCanciones) {
     ifstream archivo(nombreArchivo.c_str());
     if (!archivo) {
-        cout << "no se pudo abrir el archivo de canciones" << endl;
+        cout << "Error en nuestro sistema de canciones" << endl;
         return;
     }
 
     string linea;
     numCanciones = 0;
     Cancion *temp = nullptr;
+
     while (getline(archivo, linea)) {
         if (linea.empty()) continue;
 
-        int p1 = linea.find('|');
-        int p2 = linea.find('|', p1 + 1);
-        int p3 = linea.find('|', p2 + 1);
-        int p4 = linea.find('|', p3 + 1);
+        int pos[10];
+        pos[0] = linea.find('|');
+        for (int i = 1; i < 10; i++)
+            pos[i] = linea.find('|', pos[i - 1] + 1);
 
-        string nombre = linea.substr(0, p1);
-        string idStr = linea.substr(p1 + 1, p2 - p1 - 1);
-        string durStr = linea.substr(p2 + 1, p3 - p2 - 1);
-        string ruta = linea.substr(p3 + 1, p4 - p3 - 1);
-        string repStr = linea.substr(p4 + 1);
+        string idStr = linea.substr(0, pos[0]);
+        string idArtistaStr = linea.substr(pos[0] + 1, pos[1] - pos[0] - 1);
+        string idAlbumStr = linea.substr(pos[1] + 1, pos[2] - pos[1] - 1);
+        string nombre = linea.substr(pos[3] + 1, pos[4] - pos[3] - 1);
+        string duracionStr = linea.substr(pos[4] + 1, pos[5] - pos[4] - 1);
+        string ruta128 = linea.substr(pos[5] + 1, pos[6] - pos[5] - 1);
+        string ruta320 = linea.substr(pos[6] + 1, pos[7] - pos[6] - 1);
+        string rutaPortada = linea.substr(pos[7] + 1, pos[8] - pos[7] - 1);
+        string creditos = linea.substr(pos[8] + 1, pos[9] - pos[8] - 1);
+        string vecesStr = linea.substr(pos[9] + 1);
 
         int id = atoi(idStr.c_str());
-        float duracion = atof(durStr.c_str());
-        int reproducciones = atoi(repStr.c_str());
+        float duracion = atof(duracionStr.c_str());
+        int veces = atoi(vecesStr.c_str());
 
-        Cancion nueva(nombre, id, duracion, ruta);
+        Cancion nueva(nombre, id, duracion, ruta128);
+        nueva.setReproducciones(veces);
 
         Cancion *nuevoArr = new Cancion[numCanciones + 1];
         for (int i = 0; i < numCanciones; i++)
             nuevoArr[i] = temp[i];
+
         nuevoArr[numCanciones] = nueva;
 
         delete[] temp;
         temp = nuevoArr;
         numCanciones++;
     }
+
     archivo.close();
     canciones = temp;
-    cout<<"canciones cargadas: "<<numCanciones<<endl;
 }

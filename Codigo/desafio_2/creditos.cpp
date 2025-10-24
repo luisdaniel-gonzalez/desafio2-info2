@@ -6,8 +6,8 @@ using namespace std;
 
 Creditos::Creditos() {}
 
-Creditos::Creditos(string nom, string ape, string cod, string r):
-    nombre(nom),apellido(ape),codigoSociedad(cod),rol(r) {}
+Creditos::Creditos(string nom, string ape, string cod, string rol):
+    nombre(nom),apellido(ape),codigoSociedad(cod),rol(rol) {}
 
 Creditos::Creditos(const Creditos &c){
     nombre = c.nombre;
@@ -40,10 +40,10 @@ void Creditos::setRol(const string &r){
     rol = r;
 }
 
-void cargarCreditos(const string &nombreArchivo, Creditos *&creditos,int &numCreditos){
+void Creditos::cargarCreditos(const string &nombreArchivo, Creditos *&creditos,int &numCreditos){
     ifstream archivo(nombreArchivo.c_str());
     if(!archivo){
-        cout<<"no se encontro el archivo de creditos"<<endl;
+        cout<<"Error en nuestro sistema de creditos"<<endl;
         return;
     }
     string linea;
@@ -52,7 +52,7 @@ void cargarCreditos(const string &nombreArchivo, Creditos *&creditos,int &numCre
 
     while(getline(archivo,linea)){
         if (linea.empty()) continue;
-        //obtenemos posiciones de los creditos del archivo de creditos
+        // Formato: P,C o M|nombreApellido|codigoAfiliacion|
         int p1 = linea.find('|');
         int p2 = linea.find('|', p1 + 1);
         int p3 = linea.find('|', p2 + 1);
@@ -99,6 +99,4 @@ void cargarCreditos(const string &nombreArchivo, Creditos *&creditos,int &numCre
 
     archivo.close();
     creditos = temp;
-
-    cout<<"creditos cargados con exito "<<numCreditos<<endl;
 }

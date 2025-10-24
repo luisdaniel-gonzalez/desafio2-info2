@@ -13,11 +13,10 @@ private:
     int posicion;
     Album *albumes;
     int numAlbumes;
-    int ranking;
 
 public:
     Artista();
-    Artista(int cod,string nom, int ed, string p);
+    Artista(int cod,string nom, int ed, string pais);
     Artista(const Artista &copia);
 
     ~Artista();
@@ -32,5 +31,7 @@ public:
 
     void setSeguidores(int s);
     void setRanking(float r);
+    void cargarArtistas(const string &nombreArchivo, Artista *&artistas, int &numArtistas);
 };
+
 #endif // ARTISTA_H

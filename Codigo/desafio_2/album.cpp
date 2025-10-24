@@ -4,6 +4,7 @@
 #include <string>
 #include <fstream>
 using namespace std;
+
 Album::Album() {
     numcanciones = 0;
     canciones = nullptr;
@@ -85,18 +86,18 @@ string Album::getPortada() const {
 float Album::getPuntuacion() const {
     return puntuacion;
 }
-int Album::getCodigo() const {
-    return codigo;
+int Album::getIdAlbum() const {
+    return IdAlbum;
 }
 
 void Album::setPuntuacion(float p) {
     puntuacion = p;
 }
 
-void cargarAlbumes(const string &nombreArchivo, Album *&albumes, int &numAlbumes) {
+void Album::cargarAlbumes(const string &nombreArchivo, Album *&albumes, int &numAlbumes) {
     ifstream archivo(nombreArchivo.c_str());
     if (!archivo) {
-        cout<<"no se pudo abrir el archivo de albumes"<<endl;
+        cout<<"Error en nuestro sistema de albumes"<<endl;
         return;
     }
 
@@ -150,7 +151,5 @@ void cargarAlbumes(const string &nombreArchivo, Album *&albumes, int &numAlbumes
     }
     archivo.close();
     albumes = temp;
-
-    cout<<"albumes cargados: "<<numAlbumes<<endl;
 }
 
