@@ -1,0 +1,1 @@
+idAlbum|idArtista|nombreAlbum|fechaLanzamiento|duracionSeg|generos|sello|portada|calificacion|

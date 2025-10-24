@@ -1,0 +1,1 @@
+dueñoNickname|nombreLista|secuencia / aleatorio|listado de idCanciones separados por ,|

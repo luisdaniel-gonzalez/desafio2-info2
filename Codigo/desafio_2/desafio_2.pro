@@ -4,4 +4,16 @@ CONFIG -= app_bundle
 CONFIG -= qt
 
 SOURCES += \
-        main.cpp
+        main.cpp \
+        plataforma.cpp \
+        publicidad.cpp \
+        usuario.cpp \
+        usuarioEstandar.cpp \
+        usuarioPremium.cpp \
+
+HEADERS += \
+    plataforma.h \
+    publicidad.h \
+    usuario.h \
+    usuarioEstandar.h \
+    usuarioPremium.h \
