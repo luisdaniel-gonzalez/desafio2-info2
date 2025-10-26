@@ -47,7 +47,7 @@ public:
 void simularReproduccion(Plataforma& plataforma, Usuario* usuario,
                          Cancion* canciones, int numCanciones,
                          Album* albumes, int numAlbumes,
-                         Artista* artistas, int numArtistas) {
+                         Artista* artistas, int numArtistas, bool modoAleatorio) {
 
     const int MAX_CANCIONES = 5;
     int cancionesReproducidas = 0;
@@ -59,6 +59,10 @@ void simularReproduccion(Plataforma& plataforma, Usuario* usuario,
     cout << "\n **** REPRODUCIENDO ****" << endl;
 
     while (cancionesReproducidas < MAX_CANCIONES && reproduciendo) {
+
+        if (modoAleatorio) {
+            indiceCancionActual = rand() % numCanciones;
+        }
 
         Cancion* cancionActual = &canciones[indiceCancionActual];
         Album* albumActual = nullptr;
@@ -206,7 +210,7 @@ int main() {
                         cout << "5.- Cerrar sesion" << endl;
 
                     } else {
-                        cout << "5.- Cerrar sesion" << endl;
+                        cout << "2.- Cerrar sesion" << endl;
                     }
 
                     cout << "Seleccione: ";
@@ -218,10 +222,21 @@ int main() {
                         switch(opcionSesion) {
                         case '1':
 
+                            char aleatorioModo;
+                            cout << "\nDesea reproducir de forma aleatoria? (s/n): ";
+                            cin >> aleatorioModo;
+
+                            bool aleatorio;
+                            if (aleatorioModo == 's'){
+                                aleatorio = true;
+                            } else {
+                                aleatorio = false;
+                            }
+
                             simularReproduccion(plataforma, usuarioActual,
                                                 canciones, numCanciones,
                                                 albumes, numAlbumes,
-                                                artistas, numArtistas);
+                                                artistas, numArtistas, aleatorio);
                             break;
 
                         case '2':
@@ -266,6 +281,10 @@ int main() {
                             }
                         }
                         break;
+                        case '5':
+                            cout << "Cerrando sesion...\n" << endl;
+                            plataforma.medirConsumoRecursos();
+                            break;
 
                         default:
                             cout << "Opcion invalida" << endl;
@@ -273,14 +292,27 @@ int main() {
                     } else {
                         switch(opcionSesion) {
                         case '1':
+
+                            char aleatorioModo;
+                            cout << "\nDesea reproducir de forma aleatoria? (s/n): ";
+                            cin >> aleatorioModo;
+
+                            bool aleatorio;
+                            if (aleatorioModo == 's'){
+                                aleatorio = true;
+                            } else {
+                                aleatorio = false;
+                            }
+
                             simularReproduccion(plataforma, usuarioActual,
                                                 canciones, numCanciones,
                                                 albumes, numAlbumes,
-                                                artistas, numArtistas);
+                                                artistas, numArtistas, aleatorio);
                             break;
 
                         case '2':
-                            cout << "Cerrando sesion..." << endl;
+                            cout << "Cerrando sesion...\n" << endl;
+                            plataforma.medirConsumoRecursos();
                             break;
 
                         default:
@@ -304,14 +336,9 @@ int main() {
 
         default:
             cout << "Opcion invalida" << endl;
-
-        plataforma.medirConsumoRecursos();
-
         }
 
     } while(opcion != '2');
-
-
 
     delete[] canciones;
     delete[] albumes;

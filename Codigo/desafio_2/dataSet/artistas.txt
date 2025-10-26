@@ -1,1 +1,6 @@
-00001|claudia lorelle|32|Colombia|5000|
+00001|Shakira|47|Colombia|92000000|
+00002|Juanes|52|Colombia|42000000|
+00003|Carlos Vives|63|Colombia|28000000|
+00004|Karol G|34|Colombia|72000000|
+00005|Maluma|31|Colombia|65000000|
+00006|Sebastián Yatra|30|Colombia|35000000|
