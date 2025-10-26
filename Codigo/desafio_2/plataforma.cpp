@@ -189,21 +189,60 @@ void Plataforma::cargarDatos(const string &nombreArchivo, Plataforma &plataforma
     } archivo.close();
 }
 
+
 int Plataforma::calcularMemoriaTotal() const {
-    int total = sizeof(*this);
-    total += numUsuarios * sizeof(Usuario);
-    total += numPublicidades * sizeof(Publicidad);
-    total += numArtistas * sizeof(int);
+    int total = 0;
+    total += sizeof(*this);
+
+    for (int i = 0; i < numUsuarios; i++) {
+        total += sizeof(Usuario*);
+
+        if (usuarios[i]->getNickname()) {
+            total += strlen(usuarios[i]->getNickname()) + 1;
+        }
+        if (usuarios[i]->getContrasena()) {
+            total += strlen(usuarios[i]->getContrasena()) + 1;
+        }
+        if (usuarios[i]->getTipoDeMembresia()) {
+            total += strlen(usuarios[i]->getTipoDeMembresia()) + 1;
+        }
+        if (usuarios[i]->getCiudad()) {
+            total += strlen(usuarios[i]->getCiudad()) + 1;
+        }
+        if (usuarios[i]->getPais()) {
+            total += strlen(usuarios[i]->getPais()) + 1;
+        }
+
+        if (strcmp(usuarios[i]->getTipoDeMembresia(), "premium") == 0) {
+            UsuarioPremium* premium = dynamic_cast<UsuarioPremium*>(usuarios[i]); // Repetimos el casteo por herencia
+            if (premium) {
+                total += premium->getCantidadFavoritos() * sizeof(Cancion*);
+                total += sizeof(int) * 10000;
+            }
+        }
+    }
+
+    for (int i = 0; i < numPublicidades; i++) {
+        total += sizeof(Publicidad*);
+        if (publicidades[i]->getMensaje()) {
+            total += strlen(publicidades[i]->getMensaje()) + 1;
+        }
+    }
+
+    total += numArtistas * sizeof(Artista*);
+
     return total;
 }
 
-void Plataforma::medirConsumoRecursos(int iteraciones) const {
+void Plataforma::medirConsumoRecursos() const {
+
     int memoriaTotal = calcularMemoriaTotal();
-    cout << endl;
-    cout << "RECURSOS" << endl;
-    cout << "Iteraciones realizadas: " << iteraciones << endl;
+
+    cout << "     MEDICION DE RECURSOS" << endl;
+    cout << "Usuarios registrados: " << numUsuarios << endl;
+    cout << "Publicidades cargadas: " << numPublicidades << endl;
+    cout << "Artistas cargados: " << numArtistas << endl;
     cout << "Memoria total estimada: " << memoriaTotal << " bytes" << endl;
-    cout << endl;
 }
 
 void Plataforma::mostrarReproduccion(const char* mensajePublicidad,
@@ -215,24 +254,14 @@ void Plataforma::mostrarReproduccion(const char* mensajePublicidad,
                                      const char* rutaAudio,
                                      int duracionSegundos,
                                      bool modoRepetir,
-                                     Usuario* usuario) {
+                                     Usuario* usuario,
+                                     int contadorActual) {
 
     contadorCanciones = 0;
 
-    if (strcmp(usuario->getTipoDeMembresia(), "estandar") == 0 &&
-        contadorCanciones % 2 == 0 && contadorCanciones > 0) {
-        mostrarPublicidadPonderada();
-    }
-
     cout << "*****************************" << endl;
 
-    if (strcmp(usuario->getTipoDeMembresia(), "estandar") == 0 &&
-        contadorCanciones % 2 == 0 && contadorCanciones > 0) {
-        cout << "*****************************" << endl;
-    }
-
-
-    if (strcmp(usuario->getTipoDeMembresia(), "premium") != 0) {
+    if (strcmp(usuario->getTipoDeMembresia(), "estandar") == 0 && contadorActual % 2 == 0) {
         cout << "\nESPACIO PUBLICITARIO" << endl;
         mostrarPublicidadPonderada();
         cout << endl;
@@ -244,7 +273,7 @@ void Plataforma::mostrarReproduccion(const char* mensajePublicidad,
     cout << "Album: " << album << endl;
     cout << "Portada: " << rutaPortada << endl;
     cout << "Titulo: " << tituloCancion << endl;
-    cout << "Ruta del audio: " << rutaAudio << "-" << usuario->getCalidadAudio() << ".ogg" << endl;
+    cout << "Ruta del audio: " << rutaAudio << endl;
     cout << "Duracion: " << duracionSegundos << " segundos" << endl;
 
 
@@ -262,8 +291,6 @@ void Plataforma::mostrarReproduccion(const char* mensajePublicidad,
         cout << "5.- Repetir cancion" << endl;
     }
 }
-
-
 
 int Plataforma::getCantidadUsuarios() const { return numUsuarios; }
 int Plataforma::getCantidadArtistas() const { return numArtistas; }

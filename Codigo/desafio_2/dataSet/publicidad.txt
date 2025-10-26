@@ -47,4 +47,4 @@
 47|AAA|Transformando el conocimiento en progreso.|
 48|C|Cuidado con los punteros dobles, son como los dobles sentidos.|
 49|B|Un programador feliz eres tu.|
-50|AAA|UdeA: orgullo antioqueño, conocimiento universal.|
+50|AAA|UdeA: orgullo de Antioquia, conocimiento universal.|

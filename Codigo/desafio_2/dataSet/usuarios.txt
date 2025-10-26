@@ -1,1 +1,3 @@
 luis123|1805|estandar|Medellin|Colombia|2025-10-21|
+luispre|1805|premium|Medellin|Colombia|2025-10-21|
+ana456|1805|premium|Apartado|Colombia|2025-10-26|

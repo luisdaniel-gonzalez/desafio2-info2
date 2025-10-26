@@ -35,6 +35,10 @@ public:
 
     void mostrarInfo() const;
 
+    void cargarListas(const string& nombreArchivo,
+                      UsuarioPremium** usuarios, int numUsuarios,
+                      Cancion* canciones, int numCanciones);
+
     UsuarioPremium& operator=(const UsuarioPremium& otro);
     Cancion* operator[](int indice) const;
 };

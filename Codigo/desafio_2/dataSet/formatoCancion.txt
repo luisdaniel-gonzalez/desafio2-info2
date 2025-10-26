@@ -1,1 +1,1 @@
-idCancion (9 digs: 5 artista + 2 album + 2 cancion)|idArtista|idAlbum|idCancion|nombreCancion|duracionSeg|ruta128|ruta320|rutaPortada|creditos|vecesReproducido
+idCancion (9 digs: 5 artista + 2 album + 2 cancion)|idArtista|idAlbum|cantante|idCancion|nombreCancion|duracionSeg|ruta128|ruta320|rutaPortada|creditos|vecesReproducido

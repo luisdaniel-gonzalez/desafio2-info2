@@ -51,7 +51,7 @@ public:
     void gestionarListaFavoritos();
     void mostrarMenu();
 
-    void medirConsumoRecursos(int iteraciones) const;
+    void medirConsumoRecursos() const;
     int calcularMemoriaTotal() const;
 
     int getCantidadUsuarios() const;
@@ -67,7 +67,8 @@ public:
                              const char* rutaAudio,
                              int duracionSegundos,
                              bool modoRepetir,
-                             Usuario* usuario);
+                             Usuario* usuario,
+                             int contadorActual = 0);
 };
 
 #endif // PLATAFORMA_H

@@ -1,1 +1,6 @@
-01|00001|Lugar Secreto|2021-05-02|2400|Pop,Latina|SonyMusic|/users/storage/00001/claudia lorelle/image/lugar secreto.png|8|
+01|Donde Estan los Ladrones|/users/storage/00001/shakira/image/dondeestanladronez.png|SonyMusic|9|Pop|Latina|Rock|Jazz|000010101,000010102|
+02|Un Dia Normal|/users/storage/00002/juanes/image/undianormal.png|Universal|9|Pop|Rock|Latina|Blues|000020101,000020102|
+03|Clasicos de la Provincia|/users/storage/00003/carlos vives/image/clasicos.png|CaracolMusic|8|Latina|Vallenato|Pop|Blues|000030101,000030102|
+04|KG0516|/users/storage/00004/karol g/image/provenza.png|Universal|9|Reggaeton|Pop|Latina|Electrónica|000040101,000040102|
+05|Papi Juancho|/users/storage/00005/maluma/image/papijuancho.png|SonyMusic|8|Pop|Urbano|Latina|Reggaeton|000050101,000050102|
+06|Mantra|/users/storage/00006/sebastian yatra/image/traicionera.png|Universal|8|Pop|Latina|Romántica|Jazz|000060101,000060102|

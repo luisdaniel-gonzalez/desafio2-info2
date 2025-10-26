@@ -6,7 +6,6 @@
 #include <cstring>
 #include "plataforma.h"
 #include "publicidad.h"
-#include "usuarioEstandar.h"
 #include "usuarioPremium.h"
 #include "album.h"
 #include "cancion.h"
@@ -73,23 +72,50 @@ void simularReproduccion(Plataforma& plataforma, Usuario* usuario,
         }
 
         for (int i = 0; i < numAlbumes; i++) {
-            if (cancionActual->getIdAlbum() == albumes[i].getIdAlbum()) {
+            if (albumes[i].getIdAlbum() == cancionActual->getIdAlbum()) {
                 albumActual = &albumes[i];
                 break;
             }
         }
 
+
+        int idArtista = cancionActual->getId() / 10000;
+        for (int i = 0; i < numArtistas; i++) {
+            if (artistas[i].getCodigo() == idArtista) {
+                artistaActual = &artistas[i];
+                break;
+            }
+        }
+
+        string nombreCantante;
+
+        if (cancionActual->getCantante().empty()) {
+            nombreCantante = "Artista Desconocido";
+        } else {
+            nombreCantante = cancionActual->getCantante();
+        }
+
+        string rutaAudio;
+
+        if (strcmp(usuario->getTipoDeMembresia(), "premium") == 0) {
+            rutaAudio = cancionActual->getRuta320().c_str();
+        } else {
+            rutaAudio = cancionActual->getRuta128().c_str();
+        }
+
+
         plataforma.mostrarReproduccion(
             "Publicidad de ejemplo",
             'A',
-            artistaActual ? artistaActual->getNombre().c_str() : "Desconocido",
-            albumActual ? albumActual->getNombre().c_str() : "Sin álbum",
-            albumActual ? albumActual->getPortada().c_str() : "sin_portada.png",
+             nombreCantante.c_str(),
+            albumActual ? albumActual->getNombre().c_str() : "Album Desconocido",
+            cancionActual ? cancionActual->getRutaPortada().c_str() : "sin_portada.jpg",
             cancionActual->getNombre().c_str(),
-            cancionActual->getRutaBase().c_str(),
+            rutaAudio.c_str(),
             cancionActual->getDuracion(),
             modoRepetir,
-            usuario
+            usuario,
+            cancionesReproducidas
             );
 
         this_thread::sleep_for(chrono::seconds(3));
@@ -119,13 +145,13 @@ int main() {
     plataforma.cargarDatos("debug/dataSet/usuarios.txt", plataforma);
 
 
-    Cancion* canciones = nullptr;
-    int numCanciones = 0;
-    cancion.cargarCanciones("debug/dataSet/cancion.txt", canciones, numCanciones);
-
     Album* albumes = nullptr;
     int numAlbumes = 0;
     album.cargarAlbumes("debug/dataSet/albumes.txt", albumes, numAlbumes);
+
+    Cancion* canciones = nullptr;
+    int numCanciones = 0;
+    cancion.cargarCanciones("debug/dataSet/cancion.txt", canciones, numCanciones, albumes, numAlbumes);
 
     Publicidad* publicidad = new Publicidad();
     int numPublicidad = 0;
@@ -142,17 +168,15 @@ int main() {
     int numCreditos = 0;
     creditos->cargarCreditos("debug/dataSet/creditos.txt", creditos, numCreditos);
 
-
     char opcion = 0;
     Usuario* usuarioActual = nullptr;
-
 
     do {
         cout << "\n************************************" << endl;
         cout << "          UdeaTunes " << endl;
         cout << "************************************" << endl;
-        cout << "1. Iniciar sesion" << endl;
-        cout << "2. Salir" << endl;
+        cout << "1.- Iniciar sesion" << endl;
+        cout << "2.- Salir" << endl;
         cout << "Seleccione una opcion: ";
         cin >> opcion;
 
@@ -170,11 +194,101 @@ int main() {
                 cout << "\nBienvenido " << usuarioActual->getNickname() << endl;
                 cout << "Tipo de membresia: " << usuarioActual->getTipoDeMembresia() << endl;
 
-                this_thread::sleep_for(chrono::seconds(3));
-                simularReproduccion(plataforma, usuarioActual,
-                                    canciones, numCanciones,
-                                    albumes, numAlbumes,
-                                    artistas, numArtistas);
+                char opcionSesion = 0;
+                do {
+
+                    cout << "1.- Reproducir musica" << endl;
+
+                    if (strcmp(usuarioActual->getTipoDeMembresia(), "premium") == 0) {
+                        cout << "2.- Ver mis favoritos" << endl;
+                        cout << "3.- Agregar cancion a favoritos" << endl;
+                        cout << "4.- Seguir a otro usuario" << endl;
+                        cout << "5.- Cerrar sesion" << endl;
+
+                    } else {
+                        cout << "5.- Cerrar sesion" << endl;
+                    }
+
+                    cout << "Seleccione: ";
+                    cin >> opcionSesion;
+
+                    if (strcmp(usuarioActual->getTipoDeMembresia(), "premium") == 0) {
+                        UsuarioPremium* premium = dynamic_cast<UsuarioPremium*>(usuarioActual); // Hacemos un casteo dinamico para obtener por herencia
+
+                        switch(opcionSesion) {
+                        case '1':
+
+                            simularReproduccion(plataforma, usuarioActual,
+                                                canciones, numCanciones,
+                                                albumes, numAlbumes,
+                                                artistas, numArtistas);
+                            break;
+
+                        case '2':
+                            premium->editarFavoritos();
+                            break;
+
+                        case '3':
+                            cout << "\nCanciones disponibles:" << endl;
+                            int maxMostrar;
+                            maxMostrar = (numCanciones < 10) ? numCanciones : 10;
+                            for (int i = 0; i < maxMostrar; i++) {
+                                cout << i + 1 << ". " << canciones[i].getNombre() << endl;
+                            }
+                            cout << "Seleccione numero (1-" << maxMostrar << "): ";
+                            int num;
+                            cin >> num;
+
+                            if (num > 0 && num <= maxMostrar) {
+                                premium->agregarFavorito(&canciones[num - 1]);
+                            } else {
+                                cout << "Opcion invalida" << endl;
+                            }
+                            break;
+
+                        case '4':
+                        {
+                            cout << "\nIngrese nickname del usuario a seguir: ";
+                            char nickBuscar[50];
+                            cin >> nickBuscar;
+
+                            Usuario* usuarioEncontrado = plataforma.obtenerUsuario(nickBuscar);
+
+                            if (usuarioEncontrado &&
+                                strcmp(usuarioEncontrado->getTipoDeMembresia(), "premium") == 0 &&
+                                strcmp(usuarioEncontrado->getNickname(), usuarioActual->getNickname()) != 0) {
+
+                                UsuarioPremium* otroPremium = (UsuarioPremium*)usuarioEncontrado;
+                                premium->seguirLista(otroPremium);
+
+                            } else {
+                                cout << "Usuario no encontrado o no es Premium" << endl;
+                            }
+                        }
+                        break;
+
+                        default:
+                            cout << "Opcion invalida" << endl;
+                        }
+                    } else {
+                        switch(opcionSesion) {
+                        case '1':
+                            simularReproduccion(plataforma, usuarioActual,
+                                                canciones, numCanciones,
+                                                albumes, numAlbumes,
+                                                artistas, numArtistas);
+                            break;
+
+                        case '2':
+                            cout << "Cerrando sesion..." << endl;
+                            break;
+
+                        default:
+                            cout << "Opcion invalida" << endl;
+                        }
+                    }
+
+                } while (opcionSesion != '5' && opcionSesion != '2');
 
                 plataforma.cerrarSesion();
                 usuarioActual = nullptr;
@@ -190,16 +304,20 @@ int main() {
 
         default:
             cout << "Opcion invalida" << endl;
+
+        plataforma.medirConsumoRecursos();
+
         }
 
     } while(opcion != '2');
 
-    plataforma.medirConsumoRecursos(1);
+
 
     delete[] canciones;
     delete[] albumes;
     delete[] artistas;
     if (creditos != nullptr) delete[] creditos;
+    delete publicidad;
 
     return 0;
 }

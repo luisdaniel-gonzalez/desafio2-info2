@@ -3,6 +3,7 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+
 using namespace std;
 
 Album::Album() {
@@ -11,10 +12,18 @@ Album::Album() {
     numGeneros = 0;
     duracionTotal = 0;
     puntuacion = 0;
+    codigo = 0;
+    IdAlbum = 0;
 }
 
 Album::Album(string nom, int cod, string fecha, string sel, string port):
-    nombre(nom), codigo(cod), fechaDeLanzamiento(fecha),sello(sel), rutaPortada(port), numcanciones(0),numGeneros(0), duracionTotal(0), puntuacion(0) {
+    numcanciones(0), numGeneros(0), duracionTotal(0), puntuacion(0) {
+    nombre = nom;
+    codigo = cod;
+    fechaDeLanzamiento = fecha;
+    sello = sel;
+    rutaPortada = port;
+    IdAlbum = cod;
     canciones = nullptr;
 }
 
@@ -28,6 +37,7 @@ Album::Album(const Album &copia){
     duracionTotal = copia.duracionTotal;
     numcanciones = copia.numcanciones;
     numGeneros = copia.numGeneros;
+    IdAlbum = copia.IdAlbum;
 
     for (int i = 0; i < numGeneros; i++)
         genero[i] = copia.genero[i];
@@ -118,16 +128,16 @@ void Album::cargarAlbumes(const string &nombreArchivo, Album *&albumes, int &num
         int p8 = linea.find('|', p7 + 1);
         int p9 = linea.find('|', p8 + 1);
 
-        string nombre = linea.substr(0, p1);
-        string codStr = linea.substr(p1 + 1, p2 - p1 - 1);
-        string fecha = linea.substr(p2 + 1, p3 - p2 - 1);
+        string codStr = linea.substr(0, p1);
+        string nombre = linea.substr(p1 + 1, p2 - p1 - 1);
+        string portada = linea.substr(p2 + 1, p3 - p2 - 1);
         string sello = linea.substr(p3 + 1, p4 - p3 - 1);
-        string portada = linea.substr(p4 + 1, p5 - p4 - 1);
-        string puntStr = linea.substr(p5 + 1, p6 - p5 - 1);
-        string g1 = linea.substr(p6 + 1, p7 - p6 - 1);
-        string g2 = linea.substr(p7 + 1, p8 - p7 - 1);
-        string g3 = linea.substr(p8 + 1, p9 - p8 - 1);
-        string g4 = linea.substr(p9 + 1);
+        string puntStr = linea.substr(p4 + 1, p5 - p4 - 1);
+        string g1 = linea.substr(p5 + 1, p6 - p5 - 1);
+        string g2 = linea.substr(p6 + 1, p7 - p6 - 1);
+        string g3 = linea.substr(p7 + 1, p8 - p7 - 1);
+        string g4 = linea.substr(p8 + 1, p9 - p8 - 1);
+        string fecha = linea.substr(p9 + 1);
 
         int codigo = atoi(codStr.c_str());
         float puntuacion = atof(puntStr.c_str());

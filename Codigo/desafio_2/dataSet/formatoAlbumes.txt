@@ -1,1 +1,1 @@
-idAlbum|idArtista|nombreAlbum|fechaLanzamiento|duracionSeg|generos|sello|portada|calificacion|
+idAlbum|nombreAlbum|rutaPortada|sello|calificacion|g1|g2|g3|g4|canciones separadas por ,|
